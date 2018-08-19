@@ -52,13 +52,13 @@ public class MoveOrb : MonoBehaviour {
 
 
 		if(pitch>20){
-			horizontalVel=2;
+			horizontalVel=2+horizontalmulti;
 			StartCoroutine(stopSlide());
 			laneNum+=1;
 			pitch=0;
 		}
 		if(pitch<-20){
-			horizontalVel=-2;
+			horizontalVel=-2-horizontalmulti;
 			StartCoroutine(stopSlide());
 			laneNum-=1;
 			pitch=0;
