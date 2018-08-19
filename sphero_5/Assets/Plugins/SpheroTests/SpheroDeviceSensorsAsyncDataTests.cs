@@ -9,8 +9,11 @@ namespace SharpUnit {
 		[UnitTest]
 		public void TestDecode()
 		{
-			string encodedString = File.ReadAllText("/Users/brian/Documents/code/development/unity-plugin/ExampleProject/SensorStreaming/Assets/Plugins/SpheroTests/DataStreamingExample.json");
-			
+			string[] encodedString1 = File.ReadAllLines("/Users/brian/Documents/code/development/unity-plugin/ExampleProject/SensorStreaming/Assets/Plugins/SpheroTests/DataStreamingExample.json");
+			string encodedString="";
+			for (int i=0; i<encodedString1.Length; i++) {
+				encodedString=encodedString+encodedString1[i];
+			}
 			// Test that a message is created.
 			SpheroDeviceMessage message = 
 				SpheroDeviceMessageDecoder.messageFromEncodedString(encodedString);

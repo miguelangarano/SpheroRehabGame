@@ -18,8 +18,8 @@ public class AccessSphero : MonoBehaviour {
 		pitch=val.pitch;
 		roll=val.roll;
 
-		Debug.Log("pitch: "+pitch);
-		Debug.Log("roll: "+roll);
+		//Debug.Log("pitch: "+pitch);
+		//Debug.Log("roll: "+roll);
 
 	}
 }
