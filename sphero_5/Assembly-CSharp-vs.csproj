@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AccessSphero.cs" />
+     <Compile Include="Assets\Scripts\AudioPear.cs" />
      <Compile Include="Assets\Scripts\Menus\Botones.cs" />
      <Compile Include="Assets\Scripts\MoveCam.cs" />
      <Compile Include="Assets\Scripts\MoveOrb.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
+     <Compile Include="Assets\Scripts\ParamCube.cs" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\README.txt" />
      <None Include="Assets\Plugins\Sphero\License.txt" />
