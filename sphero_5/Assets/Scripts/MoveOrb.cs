@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class MoveOrb : MonoBehaviour {
 
+    public static int indice =0;
 	public KeyCode moveL;
 	public KeyCode moveR;
 	public float horizontalVel=0;
@@ -116,6 +117,14 @@ public class MoveOrb : MonoBehaviour {
 		Destroy (other);
 		distanceValue=distanceValue+2;
 		GameObject other1=(GameObject)Instantiate(myPrefab);
+        if(indice!=7)
+        {
+            indice++;
+        }
+        else
+        {
+            indice = 0;
+        }
 		other1.transform.position=new Vector3(distanceValue,0f,0f);
 		Debug.Log(other1.name);
 		GenerateTokens(other1);

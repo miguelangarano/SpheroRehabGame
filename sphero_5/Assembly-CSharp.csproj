@@ -48,11 +48,13 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AccessSphero.cs" />
      <Compile Include="Assets\Scripts\AdvanceLevel.cs" />
+     <Compile Include="Assets\Scripts\AudioPear.cs" />
      <Compile Include="Assets\Scripts\GenerateTokens.cs" />
      <Compile Include="Assets\Scripts\MoveCam.cs" />
      <Compile Include="Assets\Scripts\MoveCoins.cs" />
      <Compile Include="Assets\Scripts\MoveOrb.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
+     <Compile Include="Assets\Scripts\ParamCube.cs" />
      <Compile Include="Assets\Scripts\SetCoinsEnd.cs" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\README.txt" />
@@ -67,7 +69,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="JsonFx.Json">
- <HintPath>C:/Users/Miguel/Proyectos/Unity/SpheroRehabGame/sphero_5/Assets/Plugins/Sphero/JsonFx.Json.dll</HintPath>
+ <HintPath>C:/Users/marcm/Documents/GitHub/SpheroRehabGame/sphero_5/Assets/Plugins/Sphero/JsonFx.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
