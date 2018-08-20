@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\AdvanceLevel.cs" />
      <Compile Include="Assets\Scripts\AudioPear.cs" />
      <Compile Include="Assets\Scripts\GenerateTokens.cs" />
+     <Compile Include="Assets\Scripts\Menus\Botones.cs" />
      <Compile Include="Assets\Scripts\MoveCam.cs" />
      <Compile Include="Assets\Scripts\MoveCoins.cs" />
      <Compile Include="Assets\Scripts\MoveOrb.cs" />
