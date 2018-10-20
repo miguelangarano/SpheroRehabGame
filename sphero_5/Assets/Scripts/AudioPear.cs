@@ -11,13 +11,14 @@ public class AudioPear : MonoBehaviour {
     public static float[] _bandBuffer = new float[8];
     float[] _freqBandHighest = new float[8];
     float[] _bufferDecese = new float[8];
+    public AudioClip[] listaCanciones;
     
     public static float[] _audioBand = new float[8];
     public static float[] _audioBandBuffer = new float[8];
     void Start () {
         _audioSource = GetComponent<AudioSource>();
-        
-
+        _audioSource.clip= listaCanciones[Random.Range(0, listaCanciones.Length)];
+        _audioSource.Play();    
     }
 	
 	// Update is called once per frame
