@@ -7,7 +7,7 @@ public class MoveOrb : MonoBehaviour {
     public static int indice =0;
 	public KeyCode moveL;
 	public KeyCode moveR;
-	public float horizontalVel=0;
+	public float horizontalVel=0, verticalVel=0;
 	public int laneNum=2;
 	public GameObject cam;
 	UpdateValues val;
@@ -24,45 +24,54 @@ public class MoveOrb : MonoBehaviour {
 	bool collided=false;
 	public GameObject myPrefab;
 	public float horizontalmulti=0f;
+	public Rigidbody obj;
 
 	// Use this for initialization
 	void Start () {
 		val=cam.GetComponent<UpdateValues>();
+		obj=GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<Rigidbody>().velocity=new Vector3(orbVel,0,horizontalVel);
+		//GetComponent<Rigidbody>().velocity=new Vector3(orbVel,0,horizontalVel);
 
-
+		if(obj.position.z>0.6f){
+			obj.transform.position=new Vector3(obj.position.x, obj.position.y, 0.6f);
+		}else if(obj.position.z<-2.2f){
+			obj.transform.position=new Vector3(obj.position.x, obj.position.y, -2.2f);
+		}
+		obj.velocity=new Vector3(orbVel,verticalVel,horizontalVel);
 
 		pitch=val.pitch;
 		roll=val.roll;
 
-		if(Input.GetKeyDown(moveL) && leftReached==false){
-			horizontalVel=2+horizontalmulti;
-			StartCoroutine(stopSlide());
-			laneNum+=1;
+		if(Input.GetKeyDown(moveL)){
+			horizontalVel=2+horizontalVel;
 		}
 
-		if(Input.GetKeyDown(moveR) && rightReached==false){
-			horizontalVel=-2-horizontalmulti;
-			StartCoroutine(stopSlide());
-			laneNum-=1;
+		if(Input.GetKeyDown(moveR)){
+			horizontalVel=-2+horizontalVel;
 		}
 
-
-		if(pitch>20){
-			horizontalVel=2+horizontalmulti;
-			StartCoroutine(stopSlide());
-			laneNum+=1;
-			pitch=0;
+		if(roll>20){
+			horizontalVel=2;
+			//StartCoroutine(stopSlide());
+			//laneNum+=1;
+			//pitch=0;
 		}
+		if(roll<-20){
+			horizontalVel=2;
+			//StartCoroutine(stopSlide());
+			//laneNum-=1;
+			//pitch=0;
+		}
+		if(roll>-10 && roll<10){
+			//horizontalVel=0;
+		}
+
 		if(pitch<-20){
-			horizontalVel=-2-horizontalmulti;
-			StartCoroutine(stopSlide());
-			laneNum-=1;
-			pitch=0;
+			verticalVel=3;
 		}
 	}
 
@@ -71,17 +80,13 @@ public class MoveOrb : MonoBehaviour {
 			audioLose.Play();
 			Destroy (gameObject);
 			PlayerPrefs.SetInt("monedas",coins);
-			Terminar();
+			Restart();
 		}
 	}
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "moveEvent") {
 			collided=true;
-			//distanceValue=distanceValue+2;
-			//other.gameObject.transform.parent.transform.position=new Vector3(distanceValue,0f,0f);
-
-			//GameObject other1=other.gameObject.transform.parent.transform.parent.gameObject;
 
 			StartCoroutine (move (other.gameObject.transform.parent.transform.parent.gameObject));
 		} else if (other.gameObject.tag == "collis") {
@@ -98,7 +103,6 @@ public class MoveOrb : MonoBehaviour {
 			audioCoin.Play();
 			ptj.text="Monedas: "+coins;
 			Destroy (other.gameObject);
-			//Debug.Log(coins);
 		}
 	}
 
@@ -110,10 +114,6 @@ public class MoveOrb : MonoBehaviour {
 
 	IEnumerator move(GameObject other){
 		yield return new WaitForSeconds (1f);
-		//distanceValue=distanceValue+2;
-		//other.transform.position=new Vector3(distanceValue,0f,0f);
-		//Debug.Log(other.name);
-		//GenerateTokens(other);
 		Destroy (other);
 		distanceValue=distanceValue+2;
 		GameObject other1=(GameObject)Instantiate(myPrefab);
@@ -126,7 +126,6 @@ public class MoveOrb : MonoBehaviour {
             indice = 0;
         }
 		other1.transform.position=new Vector3(distanceValue,0f,0f);
-		Debug.Log(other1.name);
 		GenerateTokens(other1);
 	}
 
@@ -142,29 +141,15 @@ public class MoveOrb : MonoBehaviour {
 			interior [2] = 2;
 			int num1 = Random.Range (0, 3);
 			int num2 = Random.Range (0, 3);
-			//Debug.Log("num1: "+num1+" num2: "+num2);
 			initialize = init[num1];
 			interiorize = interior[num2];
 			if(num1!=2){
-				//GameObject group = other.transform.GetChild (init [num1]).gameObject;
-				Debug.Log("Linea 129");
-				Debug.Log("Line: 129: init: "+init [num1]+" interior: "+interior [num2]+" ChildCount: "+other.transform.GetChild (init [num1]).childCount);
-				Debug.Log("Line: 129: "+other.transform.GetChild (init [num1]).GetChild (interior [num2]).gameObject.name);
-				Debug.Log("----------------------");
 				GameObject side=	other.transform.GetChild (init [num1]).GetChild (interior [num2]).gameObject;
-				
 				side.GetComponent<Collider> ().enabled = true;
 				side.GetComponent<MeshRenderer> ().enabled = true;
 			}
 			
 		} else {
-			//GameObject group = other.transform.GetChild (initialize).gameObject;
-			//GameObject side=	other.transform.GetChild (initialize).GetChild (interiorize).gameObject;
-			//Debug.Log("Line 139: "+other.transform.GetChild (initialize).GetChild (interiorize).gameObject.name);
-			//Debug.Log("Line 139: init: "+initialize+" interior: "+interiorize);
-			//side.GetComponent<Collider> ().enabled = false;
-			//side.GetComponent<MeshRenderer> ().enabled = false;
-			
 			int[] init = new int[3];
 			init [0] = 0;
 			init [1] = 1;
@@ -175,18 +160,10 @@ public class MoveOrb : MonoBehaviour {
 			interior [2] = 2;
 			int num1 = Random.Range (0, 3);
 			int num2 = Random.Range (0, 3);
-			//Debug.Log("num1: "+num1+" num2: "+num2);
 			initialize = init[num1];
 			interiorize = interior[num2];
 			if(num1!=2){
-				//group = other.transform.GetChild (init [num1]).gameObject;
-				//side = group.transform.GetChild (interior [num2]).gameObject;
-				Debug.Log("Linea 159");
-				Debug.Log("Line 159: init: "+init [num1]+" interior: "+interior [num2]+" ChildCount: "+other.transform.GetChild (init [num1]).childCount);
-				Debug.Log("Line 159: "+other.transform.GetChild (init [num1]).GetChild (interior [num2]).gameObject.name);
-				Debug.Log("----------------------");
 				GameObject side=	other.transform.GetChild (init [num1]).GetChild (interior [num2]).gameObject;
-				
 				side.GetComponent<Collider> ().enabled = true;
 				side.GetComponent<MeshRenderer> ().enabled = true;
 			}
@@ -198,8 +175,8 @@ public class MoveOrb : MonoBehaviour {
 		Application.LoadLevel("SensorCustom");
 	}
 
-	public void Terminar(){
-		Application.LoadLevel("EndGame");
+	public void Salir(){
+		Application.LoadLevel("MenuInicio");
 	}
 
 }
