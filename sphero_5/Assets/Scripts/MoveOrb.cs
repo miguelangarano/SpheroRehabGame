@@ -41,6 +41,11 @@ public class MoveOrb : MonoBehaviour {
 		}else if(obj.position.z<-2.2f){
 			obj.transform.position=new Vector3(obj.position.x, obj.position.y, -2.2f);
 		}
+
+		if(obj.position.y<=-1){
+			obj.useGravity=false;
+		}
+
 		obj.velocity=new Vector3(orbVel,verticalVel,horizontalVel);
 
 		pitch=val.pitch;
@@ -54,24 +59,24 @@ public class MoveOrb : MonoBehaviour {
 			horizontalVel=-2+horizontalVel;
 		}
 
+		if(Input.GetKeyDown(KeyCode.Space)){
+			obj.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
+			obj.useGravity=true;
+		}
+
 		if(roll>20){
 			horizontalVel=2;
-			//StartCoroutine(stopSlide());
-			//laneNum+=1;
-			//pitch=0;
 		}
 		if(roll<-20){
 			horizontalVel=2;
-			//StartCoroutine(stopSlide());
-			//laneNum-=1;
-			//pitch=0;
 		}
 		if(roll>-10 && roll<10){
-			//horizontalVel=0;
+			horizontalVel=0;
 		}
 
 		if(pitch<-20){
-			verticalVel=3;
+			obj.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
+			obj.useGravity=true;
 		}
 	}
 

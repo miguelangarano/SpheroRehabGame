@@ -16,6 +16,10 @@ public class Botones : MonoBehaviour {
         Application.Quit();
     }
 
+    public void Estadisticas(){
+        Application.LoadLevel("EstadisticaScene");
+    }
+
    
 
     
