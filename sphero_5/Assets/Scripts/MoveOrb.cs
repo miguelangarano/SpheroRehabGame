@@ -25,6 +25,7 @@ public class MoveOrb : MonoBehaviour {
 	public GameObject myPrefab;
 	public float horizontalmulti=0f;
 	public Rigidbody obj;
+	public bool jumped=false;
 
 	// Use this for initialization
 	void Start () {
@@ -42,8 +43,13 @@ public class MoveOrb : MonoBehaviour {
 			obj.transform.position=new Vector3(obj.position.x, obj.position.y, -2.2f);
 		}
 
-		if(obj.position.y<=-1){
-			obj.useGravity=false;
+		if(obj.position.y<-0.9){
+			obj.transform.position=new Vector3(obj.position.x, -0.95f, obj.position.z);
+		}
+
+		if(obj.position.y>-0.95f){
+			//obj.useGravity=false;
+			verticalVel=-1;
 		}
 
 		obj.velocity=new Vector3(orbVel,verticalVel,horizontalVel);
@@ -60,29 +66,36 @@ public class MoveOrb : MonoBehaviour {
 		}
 
 		if(Input.GetKeyDown(KeyCode.Space)){
-			obj.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
-			obj.useGravity=true;
+			if(obj.position.y<=-0.95f){
+				//obj.AddForce(new Vector3(0, 150, 0), ForceMode.Impulse);
+				verticalVel=20;
+				//obj.useGravity=true;
+			}
 		}
 
 		if(roll>20){
 			horizontalVel=2;
 		}
+
 		if(roll<-20){
-			horizontalVel=2;
+			horizontalVel=-2;
 		}
-		if(roll>-10 && roll<10){
+
+		if(roll>=-20 && roll<=20){
 			horizontalVel=0;
 		}
 
 		if(pitch<-20){
-			obj.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
-			obj.useGravity=true;
+			if(obj.position.y<=-0.95){
+				verticalVel=20;
+				//obj.useGravity=true;
+			}
 		}
 	}
 
 	void OnCollisionEnter(Collision other) {
+		Debug.Log("collide");
 		if (other.gameObject.tag == "lethal") {
-			audioLose.Play();
 			Destroy (gameObject);
 			PlayerPrefs.SetInt("monedas",coins);
 			Restart();
@@ -109,12 +122,6 @@ public class MoveOrb : MonoBehaviour {
 			ptj.text="Monedas: "+coins;
 			Destroy (other.gameObject);
 		}
-	}
-
-
-	IEnumerator stopSlide(){
-		yield return new WaitForSeconds(.5f);
-		horizontalVel=0;
 	}
 
 	IEnumerator move(GameObject other){
