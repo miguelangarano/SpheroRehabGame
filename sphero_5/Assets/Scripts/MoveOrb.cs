@@ -105,18 +105,8 @@ public class MoveOrb : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "moveEvent") {
 			collided=true;
-
 			StartCoroutine (move (other.gameObject.transform.parent.transform.parent.gameObject));
-		} else if (other.gameObject.tag == "collis") {
-			if (other.gameObject.name == "Right") {
-				rightReached = true;
-			} else if (other.gameObject.name == "Center") {
-				rightReached = false;
-				leftReached = false;
-			} else if (other.gameObject.name == "Left") {
-				leftReached = true;
-			}
-		} else if (other.gameObject.tag == "coins") {
+		}else if (other.gameObject.tag == "coins") {
 			coins++;
 			audioCoin.Play();
 			ptj.text="Monedas: "+coins;
